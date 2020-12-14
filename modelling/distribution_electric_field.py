@@ -3,19 +3,22 @@ import numpy as np
 from modelling.const_variable import *
 
 class DistributionElectricField():
-    def __init__(self):
+    def __init__(self, massive_for_check_vacancies=None):
         self.massiv_potential = np.zeros( (SIZE_X, SIZE_Y, SIZE_Z) )
-        self.massive_for_check_vacancies = np.zeros( (SIZE_X, SIZE_Y, SIZE_Z) )
+        if massive_for_check_vacancies == None:
+            self.massive_for_check_vacancies = np.zeros( (SIZE_X, SIZE_Y, SIZE_Z) )
+        else:
+            self.massive_for_check_vacancies = massive_for_check_vacancies
     def calc(self):
         for self.iter_cycleElect in range(1, 300):
-            for self.i in range(0, SIZE_X-1):
-                for self.j in range(0, SIZE_Y-1):
+            for self.i in range(0, SIZE_X):
+                for self.j in range(0, SIZE_Y):
                     self.massiv_potential[self.i, self.j, 0] = POTENTIAL_O_VAC
                     self.massiv_potential[self.i, self.j, SIZE_Z-1] = 0
 
-            for self.k in range(1, SIZE_Z-2):
-                for self.i in range(0, SIZE_X-1):
-                    for self.j in range(0, SIZE_Y-1):
+            for self.k in range(1, SIZE_Z-1):
+                for self.i in range(0, SIZE_X):
+                    for self.j in range(0, SIZE_Y):
                         if self.i == 0:
                             self.massiv_potential[0, self.j, self.k] = self.massiv_potential[1, self.j, self.k]
                             continue
@@ -27,9 +30,9 @@ class DistributionElectricField():
                         self.massiv_potential[self.i, 0, self.k] = self.massiv_potential[self.i, 1, self.k]
                         self.massiv_potential[self.i, SIZE_Y-1, self.k] = self.massiv_potential[self.i, SIZE_Y-2, self.k]
 
-            for self.i in range(1, SIZE_X-2):
-                for self.j in range(1, SIZE_Y-2):
-                    for self.k in range(1, SIZE_Z-2):
+            for self.i in range(1, SIZE_X-1):
+                for self.j in range(1, SIZE_Y-1):
+                    for self.k in range(1, SIZE_Z-1):
                         self.q = 0
                         if self.massive_for_check_vacancies[self.i, self.j, self.k] == 1:
                             self.q = POTENTIAL_O_VAC
@@ -43,14 +46,14 @@ class DistributionElectricField():
                             (self.q/DIELECTRIC_CONST)
                         )/6
 
-            for self.i in range(0, SIZE_X-1):
-                for self.j in range(0, SIZE_Y-1):
+            for self.i in range(0, SIZE_X):
+                for self.j in range(0, SIZE_Y):
                     self.massiv_potential[self.i, self.j, 0] = POTENTIAL_O_VAC
                     self.massiv_potential[self.i, self.j, SIZE_Z-1] = 0
 
-            for self.k in range(1, SIZE_Z-2):
-                for self.i in range(0, SIZE_X-1):
-                    for self.j in range(0, SIZE_Y-1):
+            for self.k in range(1, SIZE_Z-1):
+                for self.i in range(0, SIZE_X):
+                    for self.j in range(0, SIZE_Y):
                         if self.i == 0:
                             self.massiv_potential[0, self.j, self.k] = self.massiv_potential[1, self.j, self.k]
                             continue

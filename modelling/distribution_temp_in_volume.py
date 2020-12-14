@@ -3,16 +3,19 @@ import numpy as np
 from modelling.const_variable import *
 
 class DistributionTempInVolume():
-    def __init__(self):
+    def __init__(self, massive_for_check_vacancies=None):
         self.massiv_temp = np.zeros( (SIZE_X, SIZE_Y, SIZE_Z) )
-        self.massive_for_check_vacancies = np.zeros((SIZE_X, SIZE_Y, SIZE_Z))
+        if massive_for_check_vacancies == None:
+            self.massive_for_check_vacancies = np.zeros((SIZE_X, SIZE_Y, SIZE_Z))
+        else:
+            self.massive_for_check_vacancies = massive_for_check_vacancies
         self.massive_help_for_temp = np.zeros((SIZE_X, SIZE_Y, SIZE_Z))
 
     def calc(self):
         for self.iter_cycleTemp in range(0, 100-1):
-            for self.i in range(0, SIZE_X-1):
-                for self.j in range(0, SIZE_Y-1):
-                    for self.k in range(0, SIZE_Z-1):
+            for self.i in range(0, SIZE_X):
+                for self.j in range(0, SIZE_Y):
+                    for self.k in range(0, SIZE_Z):
                         if self.i == SIZE_X-1:
                             self.t1 = 300
                         else:
@@ -55,7 +58,7 @@ class DistributionTempInVolume():
                                 (self.q*dt)
                                 )
 
-            for self.i in range(0, SIZE_X - 1):
-                for self.j in range(0, SIZE_Y - 1):
-                    for self.k in range(0, SIZE_Z - 1):
+            for self.i in range(0, SIZE_X):
+                for self.j in range(0, SIZE_Y):
+                    for self.k in range(0, SIZE_Z):
                         self.massiv_temp[self.i, self.j, self.k] = self.massive_help_for_temp[self.i, self.j, self.k]
