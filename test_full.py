@@ -8,7 +8,7 @@ dt = DistributionTempInVolume()
 timegen = TimeGeneration()
 draw_vac = DrawVacancies()
 
-for a in range(0,10):
+for a in range(0,30):
     d.calc()
 
     dt.calc()
@@ -20,4 +20,4 @@ for a in range(0,10):
     dt.massive_for_check_vacancies = timegen.massive_for_check_vacancies
 
     draw_vac.add_vacancies(coord_o_vac)
-    draw_vac.draw()
+draw_vac.draw()
